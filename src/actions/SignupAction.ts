@@ -27,7 +27,7 @@ export async function SignupAction(prevState: FormState, formData: FormData) {
     return { errors };
   }
 
-    const res = await fetch(`http://localhost:3000/api/signup`, {
+    const res = await fetch(`/api/signup`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email, password }),
