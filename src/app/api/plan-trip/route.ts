@@ -3,9 +3,9 @@ import { NextResponse } from 'next/server';
 
 export async function POST(req: Request) {
   try {
-    const { destination, start, end, preference, budget }: { destination: string; start: string; end: string; preference: string; budget: string } = await req.json();
+    const { destination, start, end, preferences, budget }: { destination: string; start: string; end: string; preferences: string; budget: string } = await req.json();
 
-    if (!destination || !start || !end || !preference || !budget) {
+    if (!destination || !start || !end || !preferences || !budget) {
       return NextResponse.json(
         { success: false, error: 'All fields (destination, start, end, preference, budget) are required.' },
         { status: 400 } 
@@ -52,7 +52,7 @@ Sustainable Travel Advisor:
 - **Start Date:** ${start}
 - **End Date:** ${end}
 - **Budget Level:** ${budget}
-- **Preferences:** ${preference}
+- **Preferences:** ${preferences}
 `,
     });
 
