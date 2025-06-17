@@ -1,4 +1,4 @@
-import { GoogleGenAI } from '@google/genai';
+import { GoogleGenAI, Type } from '@google/genai';
 import { NextResponse } from 'next/server';
 
 export async function POST(req: Request) {
@@ -42,7 +42,7 @@ Budget Optimizer Tip:
 "[Tip related to transportation and accommodation to save money and give some nearby hotel names]"
 Local Event & Weather:
 "Expect [weather description] with temperatures around [X°C]. [Relevant local event details within the date range]!"
-Sustainable Travel Advisor:
+More to explore:
 "[Nearby places to explore in that area based on preferences. Provide some names too.]"
 
 ---
@@ -54,10 +54,32 @@ Sustainable Travel Advisor:
 - **Budget Level:** ${budget}
 - **Preferences:** ${preferences}
 `,
+config: {
+  "responseMimeType": "application/json",
+  "responseSchema": {
+    "type": "OBJECT",
+    "properties": {
+      "budget_optimizer_tip": {
+        "type": "STRING"
+      },
+      "local_event_weather": {
+        "type": "STRING"
+      },
+      "more_to_explore": {
+        "type": "STRING"
+      }
+    },
+    "required": [
+      "budget_optimizer_tip",
+      "local_event_weather",
+      "more_to_explore"
+    ]
+  }
+},
     });
 
     return NextResponse.json(
-      { success: true, data: response.text },
+      { success: true, data: JSON.parse(response?.text || '') },
       { status: 200 } 
     );
   } catch (error: unknown) {

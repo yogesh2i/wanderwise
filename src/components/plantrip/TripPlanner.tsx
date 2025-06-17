@@ -33,11 +33,11 @@ export default function TripPlanner() {
         method: "POST",
         body: JSON.stringify({destination,start,end,budget,preferences})
      })
-     const data: Data["data"] = await res.json();
+     const data = await res.json();
      if(data?.error){
         alert(data.error);
      }
-    setItineraryData(data);
+    setItineraryData(data?.data);
     setLoading(false);
 }
 
