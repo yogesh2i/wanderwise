@@ -29,7 +29,7 @@ export async function LoginAction(prevState: FormState, formData: FormData) {
     return { errors };
   }
 
-    const res = await fetch(`/api/login`, {
+    const res = await fetch(`https://wanderwise-aviq.onrender.com/api/login`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email, password }),
