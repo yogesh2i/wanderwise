@@ -17,14 +17,14 @@ export default function LoginForm() {
     <div className="mb-4">
         <label htmlFor="email" className="block text-gray-700 font-medium mb-2">Email Address</label>
         <input type="email" id="email" name="email" className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500" placeholder="your.email@example.com"/>
-        {state.errors.email && (
+        {state?.errors.email && (
             <p className="text-red-500 text-sm mt-1">{state.errors.email}</p>
         )}
     </div>
     <div className="mb-6">
         <label htmlFor="password" className="block text-gray-700 font-medium mb-2">Password</label>
         <input type="password" id="password" name="password" className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500" placeholder="********"/>
-        {state.errors.password && (
+        {state?.errors.password && (
             <p className="text-red-500 text-sm mt-1">{state.errors.password}</p>
         )}
     </div>
