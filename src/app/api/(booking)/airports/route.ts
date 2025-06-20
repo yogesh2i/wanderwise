@@ -45,14 +45,14 @@ export async function GET(req: Request) {
     }
 
     const result = await response.json();
-
+    
     const data = result?.data?.searchItems
-      ?.filter((item: AirportData) => item.type === 'AIRPORT') // Filter only airports
-      ?.map((item: AirportData) => ({
-        id: item.id,
-        name: item.itemName,
-      }));
-
+    ?.filter((item: AirportData) => item.type === 'AIRPORT') // Filter only airports
+    ?.map((item: AirportData) => ({
+      id: item.id,
+      name: item.itemName,
+    }));
+    
     return NextResponse.json(
       { success: true, data },
       { status: 200 } // 200 OK
