@@ -11,25 +11,25 @@ export interface FlightData {
           segments: {
             id?: number;
             departInfo: {
-              airport?: {
-                code?: string;
-                name?: string;
+              airport: {
+                code: string;
+                name: string;
               };
               time: {
-                dateTime?: string;
+                dateTime: string;
               };
             };
-            arrivalInfo?: {
-              airport?: {
-                code?: string;
-                name?: string;
+            arrivalInfo: {
+              airport: {
+                code: string;
+                name: string;
               };
-              time?: {
-                dateTime?: string;
+              time: {
+                dateTime: string;
               };
             };
            
-            flightNumber?: string;
+            flightNumber: string;
           }[];
           durationInMinutes: string;
           
@@ -43,27 +43,26 @@ export interface FlightData {
 }
 export async function POST(req: Request) {
   try {
-    const { origin, destination, startDate, endDate }: { origin: string; destination: string; startDate: string; endDate: string } = await req.json();
+    const { origin, destination, startDate}: { origin: string; destination: string; startDate: string; endDate: string } = await req.json();
 
-    if (!origin || !destination || !startDate || !endDate) {
+    if (!origin || !destination || !startDate) {
       return NextResponse.json(
         { success: false, error: 'Missing required query parameters: origin, destination, startDate, and endDate are required.' },
         { status: 400 } 
       );
     }
 
-    if (new Date(startDate) > new Date(endDate)) {
+    if (new Date(startDate) < new Date()) {
       return NextResponse.json(
-        { success: false, error: 'Start date cannot be later than end date.' },
+        { success: false, error: 'Invalid date.' },
         { status: 400 } 
       );
     }
 
-    const url = new URL('https://priceline-com2.p.rapidapi.com/flights/search-roundtrip');
+    const url = new URL('https://priceline-com2.p.rapidapi.com/flights/search-one-way?numOfStops=0');
     url.searchParams.append('originAirportCode', origin);
     url.searchParams.append('destinationAirportCode', destination);
     url.searchParams.append('departureDate', startDate);
-    url.searchParams.append('returnDate', endDate);
 
     const options = {
       method: 'GET',
@@ -82,9 +81,9 @@ export async function POST(req: Request) {
     }
         const response = await fetch(url, options);
         if(!response.ok){
-            return NextResponse.json({success:false,error: response.statusText},{status: response.status})
+          return NextResponse.json({success:false,error: response.statusText},{status: response.status})
         }
-
+        
         const result = await response.json();
         if(result?.data?.error!==null){
             return NextResponse.json({success: false,error: "Could not search flights"},{status: 500})
@@ -95,6 +94,16 @@ export async function POST(req: Request) {
         name: i.airlines[0].name,
         itemKey: i.itemKey,
         priceKey: i.priceKey,
+        departInfo: {
+          name: i.slices[0].segments[0].departInfo.airport.name,
+          code: i.slices[0].segments[0].departInfo.airport.code,
+          time: i.slices[0].segments[0].departInfo.time.dateTime
+        },
+        arriveInfo: {
+          name: i.slices[0].segments[0].arrivalInfo.airport.name,
+          code: i.slices[0].segments[0].arrivalInfo.airport.code,
+          time: i.slices[0].segments[0].arrivalInfo.time.dateTime
+        },
         price: i.totalPriceWithDecimal.price,
         time: i.slices[0].segments[0].departInfo.time.dateTime,
         duration: i.slices[0].durationInMinutes,
