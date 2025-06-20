@@ -1,5 +1,4 @@
 import Flight from '@/components/booking/Flight'
-import Hotel from '@/components/booking/Hotel'
 import React from 'react'
 
 export default function page() {
@@ -12,9 +11,7 @@ export default function page() {
                <Flight/>
             </div>
 
-            <div className="bg-green-50 p-6 rounded-lg shadow-md">
-               <Hotel/>
-            </div>
+           
         </section>
   )
 }
