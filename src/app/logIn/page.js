@@ -1,10 +1,8 @@
 'use client'
 import { signIn } from 'next-auth/react'
 import React, { useState } from 'react'
-import {useFormStatus } from 'react-dom'
 
 export default function Page() {
-    const {pending} = useFormStatus();
     const [email,setEmail] = useState('');
     const [password,setPassword] = useState('');
     const[ error,setError] = useState('');
