@@ -2,6 +2,8 @@
 
 A full-stack web application designed to simplify travel planning by providing flight search, auto-complete suggestions, creating and planning  Itinerary using AI, AI chat bot and user authentication using **Next.js**, **NextAuth.js**, and third-party APIs.
 
+<a href="https://wanderwise-aviq.onrender.com">**Check Live Here**</a>
+
 ## Features
   * **AI Support**: Create and plan Itinerary with the help of AI.
   * **CHat with AI**: Get chat bot support.
