@@ -1,5 +1,5 @@
 import nodemailer from "nodemailer";
-import { mailOrg, mailPassword } from "./constants";
+import { mailOrg, mailPassword, nextUrl } from "./constants";
 
 export async function sendMail({email,token,type}: {email: string, token: string, type: string}) {
     const transporter = nodemailer.createTransport({
@@ -15,9 +15,9 @@ export async function sendMail({email,token,type}: {email: string, token: string
            to: email,
            subject: 'Verify Email Please',
            html: `
-            <h1>Hello Please verify here</h1>
+            <h1>Hello Please ${type} here</h1>
                <p>Click the link below to verify your email:</p>
-               <a href="http://localhost:3000/verify/${token}">Verify Email</a>
+               <a href="${nextUrl}/verify/${token}">Verify Email</a>
            `
        })
     

@@ -4,13 +4,14 @@ import React from 'react';
 import VerifyBtn from './VerifyBtn';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '@/app/api/auth/[...nextauth]/options';
+import { apiUrl } from '@/utility/constants';
 type Params = Promise<{ token: string }>
 export default async function Page({params}: {params: Params}) {
   const { token } = await params;
   
   async function submitForm() {
     'use server';
-    const response = await fetch(`http://localhost:3000/api/auth/verify?token=${token}`, {
+    const response = await fetch(`${apiUrl}/auth/verify?token=${token}`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',

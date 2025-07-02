@@ -19,7 +19,8 @@ export async function POST(req: NextRequest){
          await user.save();
         sendMail({email,token, type: 'verify'});
         return new Response(JSON.stringify({ success: true, data: null }), { status: 200 });
-    } catch (error) {
+    } catch(error) {
+        console.log(error);
         return new Response(JSON.stringify({ error: 'Failed to send verification email', success: false, data: null }), { status: 500 });
     }
 }
