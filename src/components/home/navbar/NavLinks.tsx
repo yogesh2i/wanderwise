@@ -3,33 +3,17 @@ import { signOut, useSession } from 'next-auth/react';
 import Link from 'next/link';
 import React, { useState } from 'react'
 
-// interface Logged {
-//     _isLoggedIn: string
-// }
-
 export default function NavLinks() {
     const {status} = useSession();
     const [isMenuOpen, setIsMenuOpen] = useState(false);
+
     const handleLinkClick = () => {
       setIsMenuOpen(false);
     };
-    const handleLogout = ()=>{
+    const handleLogout = async ()=>{
         
         handleLinkClick();
-        signOut({callbackUrl: "http://localhost:3000/"});
-        // fetch('/api/logout')
-        //     .then((response) => {
-        //         if (response.ok) {
-        //             console.log('Logged out successfully');
-        //              window.location.reload();
-        //         } else {
-        //             console.error('Failed to log out');
-        //         }
-        //     })
-        //     .catch((error) => {
-        //         console.error('Error during logout:', error);
-        //     });
-
+        await signOut({redirect: false,callbackUrl: "http://localhost:3000/"});
     }
   return (
     <>
@@ -48,9 +32,7 @@ export default function NavLinks() {
         <li><Link className="nav-btn px-4 py-2 rounded-lg hover:bg-indigo-100 transition-colors duration-200 text-indigo-700 font-medium" data-target="booking-page" href={"/booking"} onClick={handleLinkClick}>Bookings</Link></li>
         <li><Link className="nav-btn px-4 py-2 rounded-lg hover:bg-indigo-100 transition-colors duration-200 text-indigo-700 font-medium" data-target="chat-page" href={"/chat"} onClick={handleLinkClick}>AI Chat</Link></li>
         <li><Link className="nav-btn px-4 py-2 rounded-lg hover:bg-indigo-100 transition-colors duration-200 text-indigo-700 font-medium" data-target="recommendations-page" href={"/community"} onClick={handleLinkClick}>Community</Link></li>
-        {/* {!isLoggedIn?<li><Link className="nav-btn px-4 py-2 rounded-lg hover:bg-indigo-100 transition-colors duration-200 text-indigo-700 font-medium" data-target="auth-page" href={"/login"} onClick={handleLinkClick}>Login/Signup</Link></li>:
-        <li><Link className="nav-btn px-4 py-2 rounded-lg hover:bg-indigo-100 transition-colors duration-200 text-indigo-700 font-medium" data-target="auth-page" href={"/login"} onClick={handleLogout}  >Logout</Link></li>} */}
-        {status!=="authenticated"?<li><Link className="nav-btn px-4 py-2 rounded-lg hover:bg-indigo-100 transition-colors duration-200 text-indigo-700 font-medium" data-target="auth-page" href={"/logIn"} onClick={handleLinkClick}>Login/Signup</Link></li>:
+        {status!=="authenticated"?<li><Link className="nav-btn px-4 py-2 rounded-lg hover:bg-indigo-100 transition-colors duration-200 text-indigo-700 font-medium" data-target="auth-page" href={"/login"} onClick={handleLinkClick}>Login/Signup</Link></li>:
         <li><Link className="nav-btn px-4 py-2 rounded-lg hover:bg-indigo-100 transition-colors duration-200 text-indigo-700 font-medium" data-target="auth-page" href={"/"} onClick={handleLogout}  >Logout</Link></li>}
 
       </ul>

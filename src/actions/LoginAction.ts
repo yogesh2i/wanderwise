@@ -1,15 +1,12 @@
+//Not in use since we are using next auth as complete setup
+
 "use server"
 import { redirect } from "next/navigation";
 import { cookies } from "next/headers";
-export type Errors = {
-    email?: string;
-    password?: string;
-    global?:string
-  };
-  
-export type FormState = {
-    errors: Errors;
-  };
+import { apiUrl } from "@/utility/constants";
+import { Errors, FormState } from "@/types/commonTypes";
+
+
 
 export async function LoginAction(prevState: FormState, formData: FormData) {
   const email = formData.get("email") as string;
@@ -29,11 +26,15 @@ export async function LoginAction(prevState: FormState, formData: FormData) {
     return { errors };
   }
 
-    const res = await fetch(`https://wanderwise-aviq.onrender.com/api/login`, {
+    const res = await fetch(`${apiUrl}/login`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email, password }),
     });
+   
+        
+       
+         
   
     if (res.ok) {
         const { token } = await res.json();
@@ -50,6 +51,11 @@ export async function LoginAction(prevState: FormState, formData: FormData) {
 
         // Redirect to the home page
         redirect('/');
+
+
+      
+      
+
     } else {
         const {error} = await res.json();
        errors.global = "Login Failed"

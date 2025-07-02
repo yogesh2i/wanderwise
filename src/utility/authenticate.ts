@@ -1,5 +1,6 @@
 import { jwtVerify } from "jose";
-const JWT_SECRET = new TextEncoder().encode('1234');
+import { jwtSecret } from "./constants";
+const JWT_SECRET = new TextEncoder().encode(jwtSecret);
 
 export async function authenticate(token: string) {
      

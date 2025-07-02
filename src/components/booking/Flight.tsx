@@ -1,6 +1,7 @@
 'use client'
 import React, { ChangeEvent, FormEvent, useRef, useState } from 'react';
 import FlightResult from './FlightResult';
+
 interface airport{
     id :string,
     name: string
@@ -31,6 +32,7 @@ export default function Flight() {
     const [destinationSuggestions, setDestinationSuggestions] = useState<[airport] | []>([]);
     const [loading,setLoading] = useState(false);
     const[ flights,setFlights] = useState<[flight]| []>([]);
+
     const fetchAirports = async (query: string, setSuggestions: React.Dispatch<React.SetStateAction<[airport] | []>>) => {
         if (query.length < 2) return; // Fetch only if query is at least 2 characters
         try {

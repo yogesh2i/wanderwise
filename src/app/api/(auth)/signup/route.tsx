@@ -2,6 +2,8 @@ import { NextResponse } from 'next/server';
 import bcrypt from 'bcryptjs';
 import { User } from '@/models/UserModel';
 import { dbConnect } from '@/utility/dbConnect';
+import { sendMail } from '@/utility/mailer';
+import { generateToken } from '@/utility/generateToken';
 
 function isValidEmail(email: string): boolean {
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -50,13 +52,19 @@ export async function POST(req: Request) {
         { status: 409 } 
       );
     }
-
+   
     const hashedPassword = await bcrypt.hash(password, 10);
+    const verifyEmailToken = generateToken();
+    const verifyEmailExpires = new Date(Date.now() + 24 * 60 * 60 * 1000);
 
     const newUser = await User.create({
       email,
       password: hashedPassword,
+      verifyEmailExpires,
+      verifyEmailToken,
     });
+
+    await sendMail({token: verifyEmailToken, email: newUser.email, type: 'verify'});
 
     return NextResponse.json(
       {
@@ -69,6 +77,7 @@ export async function POST(req: Request) {
       },
       { status: 201 } 
     );
+
   } catch (error: unknown) {
     if (error instanceof Error) {
       console.error('Error during user registration:', error.message);

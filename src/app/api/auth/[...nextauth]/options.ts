@@ -4,11 +4,13 @@ import { dbConnect } from "@/utility/dbConnect";
 import { User } from "@/models/UserModel";
 import CredentialsProvider from "next-auth/providers/credentials";
 import GoogleProvider from "next-auth/providers/google";
+
 export const authOptions: NextAuthOptions = {
 providers: [
     GoogleProvider({
         clientId: process.env.GOOGLE_CLIENT_ID!,
-        clientSecret: process.env.GOOGLE_CLIENT_SECRET!
+        clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
+        checks: 'none'
       }),
     CredentialsProvider({
         id: 'credentials',
@@ -28,16 +30,17 @@ providers: [
                 }
 
                 const user = await User.findOne({ email: email });
+
                 if (!user) {
                     throw new Error("Invalid userName or password");
                 }
 
-                const isPasswordValid = await bcrypt.compare(password, user.password);
+                const isPasswordValid = await bcrypt.compare(password, user?.password);
                 if (!isPasswordValid) {
                     throw new Error("Invalid userName or password");
                 }
 
-                return { id: user._id, email: user.email };
+                return { id: user._id, email: user.email, isVerified: user.isVerified };
             } catch (error) {
                 console.error("Authentication error:", error);
                 if (error instanceof Error) {
@@ -61,14 +64,24 @@ callbacks: {
             if (!existingUser) {
               const newUser = new User({
                 email: profile?.email,
-                password: 'erejij@343rT',
+                provider: account.provider,
+                providerId: account.providerAccountId,
+                isVerified: true,
               });
               await newUser.save();
             }
-          }
+        }
         if (user) {
             token._id = user._id?.toString();
             token.email = user.email;
+            token.isVerified = user.isVerified;
+        }
+        if (token.email) {
+            await dbConnect();
+            const dbUser = await User.findOne({ email: token.email });
+            if (dbUser) {
+                token.isVerified = dbUser.isVerified;
+            }
         }
         return token;
     },
@@ -76,12 +89,13 @@ callbacks: {
         if (token) {
             session.user._id = token.id as string;
             session.user.email = token.email as string;
+            session.user.isVerified = token.isVerified as boolean;
         }
         return session;
     }
 },
 pages:{
-    error: '/logIn'
+    error: '/login'
 },
 session:{
     strategy: 'jwt',

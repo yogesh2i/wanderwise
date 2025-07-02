@@ -3,8 +3,9 @@ import { SignupAction } from '@/actions/SignupAction'
 import Link from 'next/link'
 import React, { useActionState } from 'react'
 import Form from 'next/form';
-import { FormState } from '@/actions/LoginAction';
 import SignupButton from './SignupButton';
+import { FormState } from '@/types/commonTypes';
+import GoogleSignBtn from '@/components/auth/GoogleSignBtn';
 
 export default function Page() {
     const initialState: FormState= {
@@ -36,6 +37,14 @@ export default function Page() {
     <p className="text-center text-gray-600 mt-6">
         Don&apos;t have an account? <Link id="toggle-auth" className="text-indigo-600 hover:text-indigo-800 font-medium transition-colors duration-200" href="login">Login</Link>
     </p>
+    <div className="flex items-center justify-center mt-6">
+      <span className="border-t border-gray-300 w-full"></span>
+      <span className="mx-4 text-gray-500">OR</span>
+      <span className="border-t border-gray-300 w-full"></span>
+    </div>
+    <div className="flex items-center justify-center mt-6">
+      <GoogleSignBtn/>
+    </div>
 </section>
   )
 }

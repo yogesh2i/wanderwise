@@ -1,17 +1,28 @@
 import mongoose, { Schema, Document } from 'mongoose';
 
-export interface UserModel {
-    email: string;
-    password: string;
-}
+
 export interface User extends Document {
     email: string;
-    password: string;
+    password: string | null;
+    provider?: string | 'credentials',
+    providerId? : string | null;
+    isVerified?: boolean; 
+    verifyEmailToken?: string | null;
+    verifyEmailExpires?: Date | null;
+    resetPasswordToken?: string | null;
+    resetPasswordExpires?: Date | null;
 }
 
 const UserSchema: Schema = new Schema({
     email: { type: String, required: true, unique: true },
-    password: { type: String, required: true },
+    password: { type: String, required: true, default: null },
+    provider: { type: String, default: 'credentials' },
+    providerId: { type: String, default: null },
+    isVerified: { type: Boolean, default: false },
+    verifyEmailToken: { type: String, default: null },
+    verifyEmailExpires: { type: Date, default: null },
+    resetPasswordToken: { type: String, default: null },
+    resetPasswordExpires: { type: Date, default: null }
 });
 
 export const User = mongoose.models.User || mongoose.model<User>('User', UserSchema);

@@ -1,13 +1,8 @@
 "use server"
+import { Errors, FormState } from "@/types/commonTypes";
+import { apiUrl } from "@/utility/constants";
 import { redirect } from "next/navigation";
-export type Errors = {
-    email?: string;
-    password?: string;
-  };
-  
-export type FormState = {
-    errors: Errors;
-  };
+
 
 export async function SignupAction(prevState: FormState, formData: FormData) {
   const email = formData.get("email") as string;
@@ -27,7 +22,7 @@ export async function SignupAction(prevState: FormState, formData: FormData) {
     return { errors };
   }
 
-    const res = await fetch(`https://wanderwise-aviq.onrender.com/api/signup`, {
+    const res = await fetch(`${apiUrl}/signup`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email, password }),
@@ -40,5 +35,6 @@ export async function SignupAction(prevState: FormState, formData: FormData) {
             return { errors };
           }
     }
-    redirect('/login');
+    
+    redirect('/verify');
  }
