@@ -1,3 +1,4 @@
+import { apiUrl } from '@/utility/constants';
 import { redirect, RedirectType } from 'next/navigation';
 import React from 'react';
 
@@ -9,7 +10,7 @@ export default function Page() {
     if (!email || typeof email !== 'string') {
       throw new Error('Invalid email address');
     } 
-    const response = await fetch('http://localhost:3000/api/auth/reset-password', {
+    const response = await fetch(`${apiUrl}/auth/reset-password`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
