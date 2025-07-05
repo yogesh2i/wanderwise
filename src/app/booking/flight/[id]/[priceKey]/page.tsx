@@ -193,8 +193,8 @@ export default function Page() {
                         </div>
                     </div>
 
-                    <button className="w-full mt-6 bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 rounded-lg shadow-md transform hover:scale-105 transition-all duration-300 ease-in-out" onClick={()=>router.push("/")}>
-                        Confirm Booking ($550)
+                    <button className="w-full mt-6 bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 rounded-lg shadow-md transform hover:scale-105 transition-all duration-300 ease-in-out" onClick={()=>router.push("/payment")}>
+                        Confirm Booking ${flightData?.price}
                     </button>
                 </div>
             </div>

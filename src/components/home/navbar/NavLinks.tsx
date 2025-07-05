@@ -13,7 +13,7 @@ export default function NavLinks() {
     const handleLogout = async ()=>{
         
         handleLinkClick();
-        await signOut({redirect: false,callbackUrl: "/"});
+        await signOut({redirect: true,callbackUrl: "/"});
     }
   return (
     <>

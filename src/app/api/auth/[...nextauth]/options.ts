@@ -64,6 +64,7 @@ callbacks: {
             if (!existingUser) {
               const newUser = new User({
                 email: profile?.email,
+                password: "google",
                 provider: account.provider,
                 providerId: account.providerAccountId,
                 isVerified: true,

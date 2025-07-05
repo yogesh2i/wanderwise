@@ -11,7 +11,7 @@ export default async function Page({params}: {params: Params}) {
   
   async function submitForm() {
     'use server';
-    const response = await fetch(`${apiUrl}/auth/verify?token=${token}`, {
+    const response = await fetch(`${apiUrl}/auth/verify/${token}`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',

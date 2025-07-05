@@ -11,6 +11,7 @@ export interface User extends Document {
     verifyEmailExpires?: Date | null;
     resetPasswordToken?: string | null;
     resetPasswordExpires?: Date | null;
+    credits?: number;
 }
 
 const UserSchema: Schema = new Schema({
@@ -22,7 +23,8 @@ const UserSchema: Schema = new Schema({
     verifyEmailToken: { type: String, default: null },
     verifyEmailExpires: { type: Date, default: null },
     resetPasswordToken: { type: String, default: null },
-    resetPasswordExpires: { type: Date, default: null }
+    resetPasswordExpires: { type: Date, default: null },
+    credits: {type: Number, default: 0}
 });
 
 export const User = mongoose.models.User || mongoose.model<User>('User', UserSchema);

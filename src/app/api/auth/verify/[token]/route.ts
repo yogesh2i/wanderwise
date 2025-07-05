@@ -2,9 +2,8 @@ import { User } from "@/models/UserModel";
 import { dbConnect } from "@/utility/dbConnect";
 import { NextRequest, NextResponse } from "next/server";
 
-export async function GET(req: NextRequest) {
-    const searchParams = req.nextUrl.searchParams;
-    const token = searchParams.get('token');
+export async function GET(req: NextRequest,{ params }: { params: Promise<{ token: string }>}) {
+    const {token}  = await params;
 
     if (!token) {
         return NextResponse.json({ error: "Token is required", success: false, data: null }, { status: 400 });

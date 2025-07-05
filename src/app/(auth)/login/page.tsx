@@ -20,7 +20,7 @@ export default function page() {
     </p>
 
     <div className="flex items-center justify-center mt-6">
-      <Link href="/auth/forgot" className="text-indigo-600 hover:text-indigo-800 font-medium transition-colors duration-200">
+      <Link href="/forgetPassword" className="text-indigo-600 hover:text-indigo-800 font-medium transition-colors duration-200">
         Forgot Password?
       </Link>
       </div>
