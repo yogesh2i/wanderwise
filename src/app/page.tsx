@@ -19,15 +19,15 @@ export default function Home() {
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-12 text-left">
                 <div className="bg-indigo-50 p-6 rounded-lg shadow-md hover:bg-indigo-100 cursor-pointer">
-                    <h3 className="text-xl font-semibold text-indigo-700 mb-3">Smart Itinerary Builder</h3>
+                    <h3 className="text-xl font-semibold text-indigo-700 mb-3"><Link href={"plan-trip"}>Smart Itinerary Builder</Link></h3>
                     <p className="text-gray-600">Input your destination, budget, and preferences, and let AI craft your perfect travel plan.</p>
                 </div>
                 <div className="bg-indigo-50 p-6 rounded-lg shadow-md hover:bg-indigo-100 cursor-pointer">
-                    <h3 className="text-xl font-semibold text-indigo-700 mb-3">Real-Time Suggestions</h3>
+                    <h3 className="text-xl font-semibold text-indigo-700 mb-3"><Link href={"booking"}>Real-Time Suggestions</Link></h3>
                     <p className="text-gray-600">Get live flight and hotel deals integrated from top booking APIs.</p>
                 </div>
                 <div className="bg-indigo-50 p-6 rounded-lg shadow-md hover:bg-indigo-100 cursor-pointer">
-                    <h3 className="text-xl font-semibold text-indigo-700 mb-3">AI Chat Assistant</h3>
+                    <h3 className="text-xl font-semibold text-indigo-700 mb-3"><Link href={"chat"}>AI Chat Assistant</Link></h3>
                     <p className="text-gray-600">Your personal travel guru for advice, packing tips, and local insights.</p>
                 </div>
             </div>

@@ -24,14 +24,14 @@ export async function POST(req: Request) {
     if (!email || !password) {
       return NextResponse.json(
         { success: false, error: 'Email and password are required' },
-        { status: 400 } 
+        { status: 400 }
       );
     }
 
     if (!isValidEmail(email)) {
       return NextResponse.json(
         { success: false, error: 'Invalid email format' },
-        { status: 400 } 
+        { status: 400 }
       );
     }
 
@@ -49,10 +49,10 @@ export async function POST(req: Request) {
     if (existingUser) {
       return NextResponse.json(
         { success: false, error: 'User already exists' },
-        { status: 409 } 
+        { status: 409 }
       );
     }
-   
+
     const hashedPassword = await bcrypt.hash(password, 10);
     const verifyEmailToken = generateToken();
     const verifyEmailExpires = new Date(Date.now() + 24 * 60 * 60 * 1000);
@@ -64,7 +64,7 @@ export async function POST(req: Request) {
       verifyEmailToken,
     });
 
-    await sendMail({token: verifyEmailToken, email: newUser.email, type: 'verify'});
+    await sendMail({ token: verifyEmailToken, email: newUser.email, type: 'verify' });
 
     return NextResponse.json(
       {
@@ -75,7 +75,7 @@ export async function POST(req: Request) {
           email: newUser.email,
         },
       },
-      { status: 201 } 
+      { status: 201 }
     );
 
   } catch (error: unknown) {
@@ -83,7 +83,7 @@ export async function POST(req: Request) {
       console.error('Error during user registration:', error.message);
       return NextResponse.json(
         { success: false, error: error.message || 'An unexpected error occurred' },
-        { status: 500 } 
+        { status: 500 }
       );
     }
   }

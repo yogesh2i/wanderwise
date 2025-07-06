@@ -1,5 +1,5 @@
 import Razorpay from "razorpay"
-import {razorpayKey, razorpaySecret} from './constants';
+import { razorpayKey, razorpaySecret } from './constants';
 export const CREDIT_PACKS = {
     10: 10,
     20: 20,

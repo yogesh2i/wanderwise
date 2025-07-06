@@ -13,7 +13,7 @@ import { NextRequest } from 'next/server';
 //     if (token === '' && req.nextUrl.pathname !== "/login") {
 //         return NextResponse.redirect(new URL("/login", req.url));
 //     }
-     
+
 //     const isValid: boolean = await authenticate(token);
 
 //     if(isValid && (req.nextUrl.pathname === "/login" || req.nextUrl.pathname==="/signup")) {
@@ -24,7 +24,7 @@ import { NextRequest } from 'next/server';
 //         return NextResponse.redirect(new URL("/login", req.url));
 //     }
 
-   
+
 //     return NextResponse.next();
 // }
 
@@ -33,35 +33,35 @@ import { NextRequest } from 'next/server';
 // };
 
 export async function middleware(req: NextRequest) {
-     const token =  await getToken({ req, secret: process.env.NEXTAUTH_SECRET });
-     const url = req.nextUrl;
-     
-  // Case 1: User is logged in but not verified
-  if (token && !token.isVerified) {
-    if (url.pathname !== '/verify') {
-        return NextResponse.redirect(new URL('/verify', req.url));
+    const token = await getToken({ req, secret: process.env.NEXTAUTH_SECRET });
+    const url = req.nextUrl;
+
+    // Case 1: User is logged in but not verified
+    if (token && !token.isVerified) {
+        if (url.pathname !== '/verify') {
+            return NextResponse.redirect(new URL('/verify', req.url));
+        }
     }
-}
 
-// Case 2: User is logged in and verified
-if (token && token.isVerified) {
-    if (url.pathname === '/login' || url.pathname === '/signup' || url.pathname === '/verify') {
-        return NextResponse.redirect(new URL('/', req.url));
+    // Case 2: User is logged in and verified
+    if (token && token.isVerified) {
+        if (url.pathname === '/login' || url.pathname === '/signup' || url.pathname === '/verify') {
+            return NextResponse.redirect(new URL('/', req.url));
+        }
     }
-}
 
-// Case 3: User is not logged in
-if (!token) {
-    if (url.pathname !== '/login' && url.pathname !== '/signup' && url.pathname !== '/verify') {
-        return NextResponse.redirect(new URL('/login', req.url));
+    // Case 3: User is not logged in
+    if (!token) {
+        if (url.pathname !== '/login' && url.pathname !== '/signup' && url.pathname !== '/verify') {
+            return NextResponse.redirect(new URL('/login', req.url));
+        }
     }
-}
 
 
-    
+
     return NextResponse.next();
 
 }
 export const config = {
-    matcher: ['/plan-trip', '/booking', '/chat','/login','/signup','/verify'],
+    matcher: ['/plan-trip', '/booking', '/chat', '/login', '/signup', '/verify'],
 };

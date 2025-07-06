@@ -22,19 +22,19 @@ export async function SignupAction(prevState: FormState, formData: FormData) {
     return { errors };
   }
 
-    const res = await fetch(`${apiUrl}/signup`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email, password }),
-    });
-   
-    if (!res.ok) {
-        const { error } = await res.json();
-        errors.email = error;
-        if (Object.keys(errors).length > 0) {
-            return { errors };
-          }
+  const res = await fetch(`${apiUrl}/signup`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ email, password }),
+  });
+
+  if (!res.ok) {
+    const { error } = await res.json();
+    errors.email = error;
+    if (Object.keys(errors).length > 0) {
+      return { errors };
     }
-    
-    redirect('/verify');
- }
+  }
+
+  redirect('/verify');
+}

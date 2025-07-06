@@ -5,7 +5,7 @@ function randomBytes(size: number): Buffer {
     return Buffer.from(wordArray.toString(CryptoJS.enc.Hex), 'hex');
 }
 export function generateToken(length: number = 32): string {
-    const bytes = randomBytes(length / 2); 
+    const bytes = randomBytes(length / 2);
     return bytes.toString('hex');
 }
 

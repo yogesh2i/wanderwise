@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { authenticate } from '@/utility/authenticate'; 
+import { authenticate } from '@/utility/authenticate';
 import { cookies } from 'next/headers';
 export async function GET() {
   try {
@@ -8,22 +8,22 @@ export async function GET() {
     if (!token) {
       return NextResponse.json(
         { success: false, error: 'Unauthorized: No token provided' },
-        { status: 401 } 
+        { status: 401 }
       );
     }
 
-    const isValid = await authenticate(token); 
+    const isValid = await authenticate(token);
 
     if (!isValid) {
       return NextResponse.json(
         { success: false, error: 'Unauthorized: Invalid token' },
-        { status: 401 } 
+        { status: 401 }
       );
     }
 
     return NextResponse.json(
       { success: true, message: 'User is authenticated' },
-      { status: 200 } 
+      { status: 200 }
     );
   } catch (error) {
     console.error('Error validating token:', error);

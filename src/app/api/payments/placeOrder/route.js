@@ -1,13 +1,13 @@
-import {  NextResponse } from "next/server";
-import {CREDIT_PACKS, razorpay} from '@/utility/payments';
+import { NextResponse } from "next/server";
+import { razorpay } from '@/utility/payments';
 
-export async function POST(req){
+export async function POST(req) {
     try {
-        const {credits} = await req.json();
-        if(!CREDIT_PACKS[credits]){
-           return NextResponse.json({ error: "Invalid credit pack selected", success: false, data: null }, { status: 400 });
+        const { credits } = await req.json();
+        if (!credits) {
+            return NextResponse.json({ error: "Invalid credit pack selected", success: false, data: null }, { status: 400 });
         }
-        const amount = CREDIT_PACKS[credits] * 100; 
+        const amount = credits * 100;
         const order = await razorpay.orders.create({
             amount,
             currency: "USD",

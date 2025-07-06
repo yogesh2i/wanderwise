@@ -14,7 +14,7 @@ export async function GET(req: Request) {
     if (!query) {
       return NextResponse.json(
         { success: false, error: 'Query parameter is required.' },
-        { status: 400 } 
+        { status: 400 }
       );
     }
 
@@ -31,7 +31,7 @@ export async function GET(req: Request) {
       console.error('Missing Priceline API key');
       return NextResponse.json(
         { success: false, error: 'Internal server configuration error.' },
-        { status: 500 } 
+        { status: 500 }
       );
     }
 
@@ -45,19 +45,19 @@ export async function GET(req: Request) {
     }
 
     const result = await response.json();
-    
+
     const data = result?.data?.searchItems
-    ?.filter((item: AirportData) => item.type === 'AIRPORT') // Filter only airports
-    ?.map((item: AirportData) => ({
-      id: item.id,
-      name: item.itemName,
-    }));
-    
+      ?.filter((item: AirportData) => item.type === 'AIRPORT') // Filter only airports
+      ?.map((item: AirportData) => ({
+        id: item.id,
+        name: item.itemName,
+      }));
+
     return NextResponse.json(
       { success: true, data },
       { status: 200 } // 200 OK
     );
-    
+
   } catch (error: unknown) {
     if (error instanceof Error) {
       console.error('Error fetching airport data:', error.message);

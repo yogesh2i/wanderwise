@@ -26,43 +26,43 @@ export async function LoginAction(prevState: FormState, formData: FormData) {
     return { errors };
   }
 
-    const res = await fetch(`${apiUrl}/login`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email, password }),
+  const res = await fetch(`${apiUrl}/login`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ email, password }),
+  });
+
+
+
+
+
+  if (res.ok) {
+    const { token } = await res.json();
+    console.log('Login successful:', token);
+
+    (await cookies()).set({
+      name: 'token',
+      value: token,
+      path: '/',
+      httpOnly: true,
+      secure: true,
+      sameSite: 'strict',
     });
-   
-        
-       
-         
-  
-    if (res.ok) {
-        const { token } = await res.json();
-        console.log('Login successful:', token);
 
-        (await cookies()).set({
-            name: 'token',
-            value: token,
-            path: '/',
-            httpOnly: true,
-            secure: true,
-            sameSite: 'strict',
-        });
-
-        // Redirect to the home page
-        redirect('/');
+    // Redirect to the home page
+    redirect('/');
 
 
-      
-      
 
-    } else {
-        const {error} = await res.json();
-       errors.global = "Login Failed"
 
-        if (Object.keys(errors).length > 0) {
-            return { errors };
-          }
-          return error
+
+  } else {
+    const { error } = await res.json();
+    errors.global = "Login Failed"
+
+    if (Object.keys(errors).length > 0) {
+      return { errors };
     }
- }
+    return error
+  }
+}
